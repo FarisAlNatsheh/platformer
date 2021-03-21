@@ -5,6 +5,7 @@ package platformer;
 //Group project
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -44,7 +45,7 @@ implements KeyListener, ActionListener{
 	double animSpeed = 0.3;
 	boolean animSwitch = false;
 	boolean mUp,mDown,mLeft,mRight;
-	boolean pause = false;
+	boolean pause = true;
 	int sprint=0;
 	Timer jumpTimer = new Timer(100, this);
 	double seconds;
@@ -53,7 +54,11 @@ implements KeyListener, ActionListener{
 	boolean stopLeft, stopRight;
 	double slip = 1.5;
 	int ticks, TPS;
-	
+	int delay = 0;
+	int targetFPS=60;
+	double startSecs;
+	boolean ready = false;
+
 	public Main(int[][][] map, int xStart, int yStart, int userWidth, int UserHeight) {
 		mapX = xStart- gridWidth/2;
 		mapY = yStart- gridHeight/2;
@@ -68,23 +73,27 @@ implements KeyListener, ActionListener{
 		setBackground(Color.RED);
 		setLayout(new GridLayout());
 		setVisible(true); 
-		
+
 		drawing = new JPanel() {
 
 			public void paint(Graphics g) {
-				
 				ticks++;
 				super.paint(g);
 				drawGrid(g, gridWidth,gridHeight);
 				//drawMenus(g);
 				drawChar(g);
-				try {Thread.sleep(17);} 
+				try {Thread.sleep(delay);} 
 				catch (InterruptedException e) {}
 				getContentPane().repaint();
-				xMovements();
-				yMovements();
 				g.setColor(Color.white);
 				g.drawString("TPS: "+TPS, 0, tileHeight*3);
+				if(ready) {
+					xMovements();
+					yMovements();
+				}
+				else {
+					loading(g);
+				}
 			}
 		};
 		this.add(drawing);
@@ -105,26 +114,38 @@ implements KeyListener, ActionListener{
 		setBackground(Color.RED);
 		setLayout(new GridLayout());
 		setVisible(true); 
-		
+
 		drawing = new JPanel() {
 
 			public void paint(Graphics g) {
-				
 				ticks++;
 				super.paint(g);
 				drawGrid(g, gridWidth,gridHeight);
 				//drawMenus(g);
 				drawChar(g);
-				try {Thread.sleep(17);} 
+				try {Thread.sleep(delay);} 
 				catch (InterruptedException e) {}
 				getContentPane().repaint();
-				xMovements();
-				yMovements();
 				g.setColor(Color.white);
 				g.drawString("TPS: "+TPS, 0, tileHeight*3);
+				if(ready) {
+					xMovements();
+					yMovements();
+				}
+				else {
+					loading(g);
+				}
 			}
 		};
 		this.add(drawing);
+	}
+
+	public void loading(Graphics g) {
+		if(!ready) {
+			g.setFont(new Font("Showcard Gothic", Font.PLAIN, 32));
+			g.drawString("Loading", drawing.getWidth()/2, drawing.getHeight()/2);
+			g.setFont(new Font("Showcard Gothic", Font.PLAIN, 8));
+		}
 	}
 
 	public void initializeChar() {
@@ -180,7 +201,7 @@ implements KeyListener, ActionListener{
 					g.drawImage(textures[5][3], i*(tileWidth)+camX, i2*(tileHeight)+camY,tileWidth, tileHeight,  null);
 				else
 					g.drawImage(textures[0][3], i*(tileWidth)+camX, i2*(tileHeight)+camY,tileWidth, tileHeight,  null);
-				
+
 			}
 	}
 
@@ -189,7 +210,7 @@ implements KeyListener, ActionListener{
 		int winCharY = drawing.getHeight()/2;
 		g.drawImage(charSheet[(int)charAnim][charState], winCharX , winCharY, tileWidth, tileHeight,  null);
 		charY = ((double)winCharY-camY)/tileHeight + mapY;
-		
+
 		charX = (winCharX-camX)/tileWidth + mapX;
 		if(mLeft) {
 			charX = (int)Math.ceil((double)(winCharX-camX)/tileWidth + mapX);
@@ -199,10 +220,10 @@ implements KeyListener, ActionListener{
 		}
 		//System.out.println("CharX: "+charX + "\tCharY:  "+(int)charY + "\tmapX: " + mapX + "\tmapY: " + mapY);
 	}
-	
+
 	public void yMovements() {
 		accY = tileHeight/210.0;
-		
+
 
 		camY += speedY;
 		if(camY <= tileHeight*-1) {
@@ -213,15 +234,15 @@ implements KeyListener, ActionListener{
 			camY = 0;
 			mapY--;
 		}
-		
-	
+
+
 		if(mUp) {
 			speedY = tileHeight/4;
 			if(jumpTime >= 30) {
 				if(map[charX][(int)Math.floor(charY)+1][1] == 1) {mUp = false;}
-				
+
 			}
-				if(map[charX][(int)Math.round(charY)-1][1] == 1) {mUp = false;}
+			if(map[charX][(int)Math.round(charY)-1][1] == 1) {mUp = false;}
 			speedY -= accY*jumpTime;
 			charState = 0; 
 		}
@@ -229,10 +250,10 @@ implements KeyListener, ActionListener{
 			speedY = 0;
 			speedY -= accY*jumpTime;
 		}
-		
+
 		jumpTime++;
 
-	
+
 		if((map[charX][(int)charY+1][1] == 1 && !mUp)) {
 			accY = 0;
 			speedY= 0;
@@ -240,13 +261,13 @@ implements KeyListener, ActionListener{
 			error = (charY-Math.round(charY))*(double)tileHeight;
 			camY += error;
 		}
-		
-		
+
+
 	}
-	
+
 	public void xMovements() {
-	
-		
+
+
 		accX = tileHeight/210.0;
 		if(mLeft) {
 			if(mRight) {
@@ -295,17 +316,17 @@ implements KeyListener, ActionListener{
 				stopRight = false;
 			}
 			else {
-				
+
 				sprint--;
 				speedX += accX*sprint/slip; 
 				camX -= speedX;
-				
+
 
 				if(camX <= -1*tileWidth) {
 					camX = 0;
 					mapX++;
 				}		
-				
+
 				if(speedX<=0) { speedX = 0; sprint=0;stopRight = false; }
 			}
 		}
@@ -317,7 +338,7 @@ implements KeyListener, ActionListener{
 				sprint++;
 				speedX -= accX*sprint/slip; 
 				camX += speedX;
-				
+
 
 				if(camX >= tileWidth) {
 					camX = 0;
@@ -327,6 +348,16 @@ implements KeyListener, ActionListener{
 			}
 		}
 
+	}
+
+	public void capFPS(){
+		if(!(ticks <= targetFPS)) {
+			ready=false;
+			delay++;
+			return;
+		}
+		if(startSecs > 2)
+			ready = true;
 	}
 
 	public void keyPressed(KeyEvent e) {
@@ -355,7 +386,7 @@ implements KeyListener, ActionListener{
 		charAnim = 1;
 		if(e.getKeyCode()== KeyEvent.VK_A) {
 			mLeft = false;
-			
+
 			sprint =0;
 			stopLeft = true;
 			stopRight = false;
@@ -366,24 +397,26 @@ implements KeyListener, ActionListener{
 			stopRight = true;
 			stopLeft = false;
 		}
-		
-		
+
+
 	}
 
 	@Override
 	public void keyTyped(KeyEvent e) {
 	}
-	
+
 	public void actionPerformed(ActionEvent arg0) {
 		jumpTime+=1;
 		seconds+=0.1;
+		startSecs+=0.1;
 		if((int)seconds == 1) {
 			TPS = ticks;
 			ticks= 0;
 			seconds = 0;
 		}
+		capFPS();
 	}
-	
+
 	public static void main(String[] args) {}
 
 }
