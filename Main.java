@@ -1,5 +1,8 @@
 package platformer;
 
+//Faris Al-Natsheh
+//Group project with: Ismail AbuHashish, Nadeem
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.GridLayout;
