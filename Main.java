@@ -1,7 +1,8 @@
 package platformer;
 
-//Faris Al-Natsheh
-//Group project with: Ismail AbuHashish, Nadeem
+//Faris Al-Natsheh,Ismail AbuHashish, Nadeem Jouaneh
+//Ms. Bdour AlZeer
+//Group project
 
 import java.awt.Color;
 import java.awt.Graphics;
