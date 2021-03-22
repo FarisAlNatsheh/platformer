@@ -45,7 +45,6 @@ implements KeyListener, ActionListener{
 	double animSpeed = 0.3;
 	boolean animSwitch = false;
 	boolean mUp,mDown,mLeft,mRight;
-	boolean pause = true;
 	int sprint=0;
 	Timer jumpTimer = new Timer(100, this);
 	double seconds;
@@ -266,9 +265,7 @@ implements KeyListener, ActionListener{
 	}
 
 	public void xMovements() {
-
-
-		accX = tileHeight/210.0;
+		accX = tileWidth/210.0;
 		if(mLeft) {
 			if(mRight) {
 				stopRight = true;
@@ -371,9 +368,6 @@ implements KeyListener, ActionListener{
 		}
 		if(e.getKeyCode()== KeyEvent.VK_D) {
 			mRight = true;
-		}
-		if(e.getKeyCode() == KeyEvent.VK_ESCAPE) {
-			pause = !pause;
 		}
 		if(e.getKeyCode() == KeyEvent.VK_0) {
 			gridWidth--;
