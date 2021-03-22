@@ -34,7 +34,7 @@ implements KeyListener, ActionListener{
 	int mapY=1;
 	int camX = 0;
 	int camY = 0;
-	int charX;
+	double charX;
 	double charY;
 	double speedX;
 	double speedY;
@@ -51,7 +51,7 @@ implements KeyListener, ActionListener{
 	int jumpTime = 0;
 	double error;
 	boolean stopLeft, stopRight;
-	double slip = 1.5;
+	double slip = 1.3;
 	int ticks, TPS;
 	int delay = 0;
 	int targetFPS=60;
@@ -85,7 +85,10 @@ implements KeyListener, ActionListener{
 				catch (InterruptedException e) {}
 				getContentPane().repaint();
 				g.setColor(Color.white);
+				
 				g.drawString("TPS: "+TPS, 0, tileHeight*3);
+				g.drawString("CharX: "+charX, 0, tileHeight*4);
+				g.drawString("CharY: "+charY, 0, tileHeight*5);
 				if(ready) {
 					xMovements();
 					yMovements();
@@ -210,13 +213,8 @@ implements KeyListener, ActionListener{
 		g.drawImage(charSheet[(int)charAnim][charState], winCharX , winCharY, tileWidth, tileHeight,  null);
 		charY = ((double)winCharY-camY)/tileHeight + mapY;
 
-		charX = (winCharX-camX)/tileWidth + mapX;
-		if(mLeft) {
-			charX = (int)Math.ceil((double)(winCharX-camX)/tileWidth + mapX);
-		}
-		else if(mRight) {
-			charX = (int)Math.floor((double)(winCharX-camX)/tileWidth + mapX);
-		}
+		charX = ((double)(winCharX-camX)/tileWidth + mapX);
+	
 		//System.out.println("CharX: "+charX + "\tCharY:  "+(int)charY + "\tmapX: " + mapX + "\tmapY: " + mapY);
 	}
 
@@ -238,10 +236,10 @@ implements KeyListener, ActionListener{
 		if(mUp) {
 			speedY = tileHeight/4;
 			if(jumpTime >= 30) {
-				if(map[charX][(int)Math.floor(charY)+1][1] == 1) {mUp = false;}
+				if(map[(int)Math.round(charX)][(int)Math.floor(charY)+1][1] == 1) {mUp = false;}
 
 			}
-			if(map[charX][(int)Math.round(charY)-1][1] == 1) {mUp = false;}
+			if(map[(int)Math.round(charX)][(int)Math.ceil(charY)-1][1] == 1) {mUp = false;}
 			speedY -= accY*jumpTime;
 			charState = 0; 
 		}
@@ -253,7 +251,7 @@ implements KeyListener, ActionListener{
 		jumpTime++;
 
 
-		if((map[charX][(int)charY+1][1] == 1 && !mUp)) {
+		if((map[(int)Math.round(charX)][(int)charY+1][1] == 1 && !mUp)) {
 			accY = 0;
 			speedY= 0;
 			jumpTime = 0;
@@ -278,7 +276,7 @@ implements KeyListener, ActionListener{
 				return;
 			}
 		}
-		if(mLeft && map[charX-1][(int)charY][1] != 1 && !stopRight) {
+		if(mLeft && map[(int)Math.ceil(charX)-1][(int)Math.floor(charY)][1] != 1 && !stopRight) {
 			speedX = 0;
 			sprint++;
 			speedX += accX*sprint; 
@@ -292,7 +290,7 @@ implements KeyListener, ActionListener{
 				mapX--;
 			}
 		}
-		if(mRight && map[charX+1][(int)charY][1] != 1 && !stopLeft) {
+		if(mRight && map[(int)Math.floor(charX)+1][(int)Math.floor(charY)][1] != 1 && !stopLeft) {
 			speedX = 0;
 			sprint--;
 			speedX -= accX*sprint; 
@@ -309,7 +307,7 @@ implements KeyListener, ActionListener{
 			}
 		}
 		if(stopRight) {
-			if(map[charX+1][(int)charY][1] == 1) {
+			if(map[(int)Math.ceil(charX)+1][(int)charY][1] == 1) {
 				stopRight = false;
 			}
 			else {
@@ -328,7 +326,7 @@ implements KeyListener, ActionListener{
 			}
 		}
 		if(stopLeft) {
-			if(map[charX-1][(int)charY][1] == 1) {
+			if(map[(int)Math.floor(charX)-1][(int)charY][1] == 1) {
 				stopLeft = false;
 			}
 			else {
