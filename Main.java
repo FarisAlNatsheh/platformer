@@ -203,7 +203,7 @@ implements KeyListener, ActionListener{
 			charAnim = alpha/51;
 			g2.setColor(new Color(0,204,204, alpha));
 			g2.fillRect(0, 0, drawing.getWidth(),drawing.getHeight());
-			alpha+=2;
+			alpha+=1;
 		}
 		if(win) {
 			g2.setColor(new Color(0,204,204, alpha));
