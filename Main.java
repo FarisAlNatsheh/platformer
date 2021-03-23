@@ -186,7 +186,7 @@ implements KeyListener, ActionListener{
 			ready = true;
 			dead = false;
 		}
-		
+
 		if(map[(int)Math.round(charX)][(int)Math.round(charY)][1] == 3){
 			mapX = 3;
 			mapY = 3;
@@ -214,11 +214,11 @@ implements KeyListener, ActionListener{
 		}
 		else {
 
-			
+
 		}
-		
+
 	}
-	
+
 	public void loading(Graphics g) {
 		if(!ready) {
 			g.setFont(new Font("Showcard Gothic", Font.PLAIN, 32));
@@ -461,10 +461,17 @@ implements KeyListener, ActionListener{
 			gridWidth--;
 			gridHeight--;
 		}
+		if(e.getKeyCode() == KeyEvent.VK_9) {
+			gridWidth++;
+			gridHeight++;
+		}
 		if(e.getKeyCode() == KeyEvent.VK_SPACE) {
-			setVisible(false);
-			dispose();
-			new Main_Menu();
+			if(win) {
+				setVisible(false);
+				new Main_Menu();
+				win = false;
+				dispose();
+			}
 		}
 	}
 
