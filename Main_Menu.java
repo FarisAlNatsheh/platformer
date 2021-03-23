@@ -56,10 +56,10 @@ public class Main_Menu implements ActionListener, ItemListener {
 		if(!checked) {
 			width = Integer.parseInt(w.getText());
 			height = Integer.parseInt(h.getText());
-			new Main(new Levels().testBench(),20,20,width,height);
+			new Main(new Levels().firstLevel(),20,20,width,height);
 		}
 		else
-			new Main(new Levels().testBench(),20,20);
+			new Main(new Levels().firstLevel(),20,20);
 		frame.setVisible(false);
 
 	}
