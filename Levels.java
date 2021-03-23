@@ -42,8 +42,8 @@ public class Levels {
 			map[i][32][1]=1;
 		}
 		
-		map[33][33][0] = 1;
-		map[33][33][1] = 0;
+		map[33][33][0] = 2;
+		map[33][33][1] = 2;
 		return map;
 	}
 	public int[][][] emptyLevel(){
@@ -79,6 +79,10 @@ public class Levels {
 					map[y][x][1] = 1;
 				}
 			}
+			for(int x = 36; x < 80;x++) {// death platform
+				map[x][36][0] = 2;
+				map[x][36][1] = 2;
+			}
 			for(int x = 33; x < 38 ;x++) {// height of the divider
 				for(int y = 35; y < 36;y++) {// thickness of the wall divider
 					map[y][x][0] = 1;
@@ -93,8 +97,8 @@ public class Levels {
 				}
 			}
 			for(int i=25; i <= 28;i++ ) {// platform
-				map[i][32][0]=1;
-				map[i][32][1]=1;
+				map[i][34][0]=1;
+				map[i][34][1]=1;
 			}
 		
 			for(int i=32; i <= 34;i++ ) {// platform
@@ -126,6 +130,8 @@ public class Levels {
 				map[i][27][1]=1; // =0 means go through & =1 means not go through
 			
 			}
+				
+						map[77][26][1]=3;
 		 return map;
 		}
 
