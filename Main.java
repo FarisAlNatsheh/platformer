@@ -59,10 +59,11 @@ implements KeyListener, ActionListener{
 	double startSecs;
 	boolean ready = false;
 	int xStart, yStart;
-	boolean dead;
+	boolean dead,win;
 	int deathAnim;
 	int alpha = 0;
 	double jumpAnim;
+	boolean nextLevel;
 	public Main(int[][][] map, int xStart, int yStart, int userWidth, int UserHeight) {
 		this.xStart = xStart- gridWidth/2;
 		this.yStart= yStart- gridHeight/2;
@@ -169,20 +170,55 @@ implements KeyListener, ActionListener{
 			alpha = 255;
 			dead = true;
 			ready = false;
+			speedX = 0;
+			speedY = 0;
+			jumpTime = 0;
+			sprint = 0;
 		}
 		if(alpha  > 0 && dead) {
 			charState = 20;
 			charAnim = alpha/51;
 			g2.setColor(new Color(255,0,0, alpha));
 			g2.fillRect(0, 0, drawing.getWidth(),drawing.getHeight());
-			alpha-=2;
+			alpha-=4;
 		}
 		else {
 			ready = true;
 			dead = false;
 		}
 		
+		if(map[(int)Math.round(charX)][(int)Math.round(charY)][1] == 3){
+			mapX = 3;
+			mapY = 3;
+			alpha = 0;
+			win = true;
+			ready = false;
+			speedX = 0;
+			speedY = 0;
+			jumpTime = 0;
+			sprint = 0;
+		}
+		if(alpha  < 254 && win) {
+			charState = 17;
+			charAnim = alpha/51;
+			g2.setColor(new Color(0,204,204, alpha));
+			g2.fillRect(0, 0, drawing.getWidth(),drawing.getHeight());
+			alpha+=2;
+		}
+		if(win) {
+			g2.setColor(new Color(0,204,204, alpha));
+			g2.fillRect(0, 0, drawing.getWidth(),drawing.getHeight());
+			g2.setColor(new Color(255,255,255, alpha));
+			g.setFont(new Font("Futura", Font.BOLD, 32));
+			g.drawString("You won! Press space to continue", drawing.getWidth()/2-270, drawing.getHeight()/2);
+		}
+		else {
+
+			
+		}
+		
 	}
+	
 	public void loading(Graphics g) {
 		if(!ready) {
 			g.setFont(new Font("Showcard Gothic", Font.PLAIN, 32));
@@ -244,8 +280,10 @@ implements KeyListener, ActionListener{
 				int currentLoc = map[mapX+i][mapY+i2][0];
 				if(currentLoc == 0)
 					g.drawImage(textures[5][3], i*(tileWidth)+camX, i2*(tileHeight)+camY,tileWidth, tileHeight,  null);
-				else
+				else if(currentLoc == 1)
 					g.drawImage(textures[0][3], i*(tileWidth)+camX, i2*(tileHeight)+camY,tileWidth, tileHeight,  null);
+				else if(currentLoc == 2)
+					g.drawImage(textures[0][5], i*(tileWidth)+camX, i2*(tileHeight)+camY,tileWidth, tileHeight,  null);
 
 			}
 	}
@@ -423,6 +461,11 @@ implements KeyListener, ActionListener{
 			gridWidth--;
 			gridHeight--;
 		}
+		if(e.getKeyCode() == KeyEvent.VK_SPACE) {
+			setVisible(false);
+			dispose();
+			new Main_Menu();
+		}
 	}
 
 
@@ -467,6 +510,5 @@ implements KeyListener, ActionListener{
 		capFPS();
 	}
 
-	public static void main(String[] args) {}
 
 }
