@@ -131,7 +131,7 @@ public class Levels {
 			
 			}
 				
-						map[77][26][1]=3;
+						map[77][26][1]=3;map[77][25][1]=3;map[77][24][1]=3;
 		 return map;
 		}
 
