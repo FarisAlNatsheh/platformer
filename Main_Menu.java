@@ -2,6 +2,7 @@ package platformer;
 import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -10,21 +11,25 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-//test
+
 //Ismail, Faris, Nadeem
 //Date: 21/3/2021
 public class Main_Menu implements ActionListener, ItemListener {
 	JTextArea h,w;
-	JLabel x,k;
+	JLabel x;
 	JButton btn;
 	JCheckBox checkbox1;
 	int width, height;
 	boolean checked = false;
 	JFrame frame = new JFrame("Main_Menu");
+	JComboBox dropdown;
+	String[] levellist = {"Level 1","Level 2","Level 3","Level 4","Level 5"};
 	public Main_Menu() {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(460, 500);
 		frame.setLocation(430, 100);
+		dropdown = new JComboBox(levellist);
+		frame.add(dropdown);
 		JPanel panel = new JPanel();
 		panel.setLayout(null); 
 		frame.add(panel);
@@ -42,6 +47,7 @@ public class Main_Menu implements ActionListener, ItemListener {
 		checkbox1.setBounds(180,200, 100,50);
 		btn = new JButton("OK");
 		btn.setBounds(175,250,100,30);
+		dropdown.setBounds(175,300,100,30);
 		btn.addActionListener(this);
 		checkbox1.addItemListener(this);
 		panel.add(checkbox1);
@@ -52,23 +58,58 @@ public class Main_Menu implements ActionListener, ItemListener {
 		frame.setVisible(true);
 	}
 	public void actionPerformed (ActionEvent e) {	
-		
+
 		if(!checked) {
 			width = Integer.parseInt(w.getText());
 			height = Integer.parseInt(h.getText());
-			new Main(new Levels().firstLevel(),20,20,width,height);
-		}
-		else
-			new Main(new Levels().firstLevel(),20,20);
-		frame.setVisible(false);
+			switch (dropdown.getSelectedIndex() + 1) {
+			case 1:	
+				new Main(new Levels().firstLevel(),20,20,width,height);
+				break;
+			case 2:	
+				new Main(new Levels().secondLevel(),20,20,width,height);
+				break;
+			case 3:	
+				new Main(new Levels().thirdLevel(),20,20,width,height);
+				break;
+			case 4:	
+				new Main(new Levels().fourthLevel(),20,20,width,height);
+				break;
+			case 5:	
+				break;
+			}
 
+			frame.setVisible(false);
+			frame.dispose();
+
+		}
+		else {
+			switch (dropdown.getSelectedIndex() + 1) {
+			case 1:	
+				new Main(new Levels().firstLevel(),20,20);
+				break;
+			case 2:
+				new Main(new Levels().secondLevel(),20,20);
+				break;
+			case 3:
+				new Main(new Levels().thirdLevel(),20,20);
+				break;
+			case 4:
+				new Main(new Levels().fourthLevel(),20,20);
+				break;
+			case 5:
+				break;
+			}
+		frame.setVisible(false);
+		frame.dispose();
+		}
 	}
 
 	public static void main(String[] args) {
 		new Main_Menu();
 
 	}
-	
+
 	public void itemStateChanged(ItemEvent e) {
 		if(e.getStateChange() == 1) {
 			checked = true;
