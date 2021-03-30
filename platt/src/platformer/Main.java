@@ -64,7 +64,11 @@ implements KeyListener, ActionListener{
 	int alpha = 0;
 	double jumpAnim;
 	boolean nextLevel;
-	public Main(int[][][] map, int xStart, int yStart, int userWidth, int UserHeight) {
+	String imgName;
+	int mainScale;
+	public Main(int[][][] map, int xStart, int yStart, int userWidth, int UserHeight, String imgName, int scale) {
+		mainScale = scale;
+		this.imgName = imgName;
 		this.xStart = xStart- gridWidth/2;
 		this.yStart= yStart- gridHeight/2;
 		mapX = xStart- gridWidth/2;
@@ -112,7 +116,9 @@ implements KeyListener, ActionListener{
 		};
 		this.add(drawing);
 	}  
-	public Main(int[][][] map, int xStart, int yStart) {
+	public Main(int[][][] map, int xStart, int yStart, String imgName, int scale) {
+		mainScale = scale;
+		this.imgName = imgName;
 		this.xStart = xStart- gridWidth/2;
 		this.yStart= yStart- gridHeight/2;
 		mapX = xStart- gridWidth/2;
@@ -231,11 +237,11 @@ implements KeyListener, ActionListener{
 	public void initializeChar() {
 		BufferedImage sheet = null;
 		try {
-			sheet = ImageIO.read(new File("main2.png"));
+			sheet = ImageIO.read(new File(imgName));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		int scale = 64;
+		int scale = mainScale;
 		int sheetHeight = sheet.getHeight(null)/scale;
 		int sheetWidth = sheet.getWidth(null)/scale;
 		charSheet = new BufferedImage[sheetWidth][sheetHeight];

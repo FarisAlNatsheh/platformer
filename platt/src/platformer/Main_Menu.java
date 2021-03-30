@@ -64,16 +64,16 @@ public class Main_Menu implements ActionListener, ItemListener {
 			height = Integer.parseInt(h.getText());
 			switch (dropdown.getSelectedIndex() + 1) {
 			case 1:	
-				new Main(new Levels().firstLevel(),20,20,width,height);
+				new Main(new Levels().firstLevel(),20,20,width,height, "main2.png", 64);
 				break;
 			case 2:	
-				new Main(new Levels().secondLevel(),20,20,width,height);
+				new Main(new Levels().secondLevel(),20,20,width,height, "main2.png", 64);
 				break;
 			case 3:	
-				new Main(new Levels().thirdLevel(),20,20,width,height);
+				new Main(new Levels().thirdLevel(),20,20,width,height, "main2.png", 64);
 				break;
 			case 4:	
-				new Main(new Levels().fourthLevel(),20,20,width,height);
+				new Main(new Levels().fourthLevel(),20,20,width,height, "main2.png", 64);
 				break;
 			case 5:	
 				break;
@@ -86,16 +86,16 @@ public class Main_Menu implements ActionListener, ItemListener {
 		else {
 			switch (dropdown.getSelectedIndex() + 1) {
 			case 1:	
-				new Main(new Levels().firstLevel(),20,20);
+				new Main(new Levels().firstLevel(),20,20, "main2.png", 64);
 				break;
 			case 2:
-				new Main(new Levels().secondLevel(),20,20);
+				new Main(new Levels().secondLevel(),20,20, "main2.png", 64);
 				break;
 			case 3:
-				new Main(new Levels().thirdLevel(),20,20);
+				new Main(new Levels().thirdLevel(),20,20, "main2.png", 64);
 				break;
 			case 4:
-				new Main(new Levels().fourthLevel(),20,20);
+				new Main(new Levels().fourthLevel(),20,20, "main2.png", 64);
 				break;
 			case 5:
 				break;
