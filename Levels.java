@@ -1,5 +1,6 @@
 package platformer;
-
+//BIy: smail Abu, Faris, Nadeem
+//Date: 30/3/2021
 public class Levels {
 	int state = 3;
 	public int[][][] testBench(){
@@ -435,6 +436,117 @@ public class Levels {
 		for(int i = 22;i< 23;i++) {// winning platform
 			map[i][80][0]=1; // = 0 background texture  & = 1 means block texture  & = 2 lava texture
 			map[i][80][1]=3; // = 0 transparent block & = 1 solid block & = 2 death block & = 3 winning block
+		} 
+		return map;
+	}
+	public int[][][] fifthLevel(){
+		//						 y 	   x
+		int[][][] map = new int[100][100][state];
+		for(int x = 0; x < 100;x++) {
+			for(int y = 0; y < 20;y++) {// creates the ceiling
+				map[x][y][0] = 1;
+				map[x][y][1] = 1;
+			}
+		}
+
+		for(int x = 0; x < 100;x++) {//left most wall
+			for(int y = 0; y < 20;y++) { // thickness
+				map[y][x][0] = 1;
+				map[y][x][1] = 1;
+			}
+		}
+		for(int x = 0; x < 100;x++) { //right most wall
+			for(int y = 80; y < 100;y++) { // thickness
+				map[y][x][0] = 1;
+				map[y][x][1] = 1;
+			}
+		}
+		for(int x = 0; x < 60;x++) {
+			for(int y = 37; y < 40;y++) {// runway block depth
+				map[x][y][0] = 1;
+				map[x][y][1] = 1;
+			}
+		}
+		for(int x = 70; x < 100;x++) {
+			for(int y = 37; y < 40;y++) {// runway block depth
+				map[x][y][0] = 1;
+				map[x][y][1] = 1;
+			}
+		}
+		for(int x = 20; x < 100;x++) {
+			for(int y = 85; y < 90;y++) {// runway block depth
+				map[x][y][0] = 1;
+				map[x][y][1] = 1;
+			}
+		}
+
+		for(int x = 0; x < 25;x++) {// height of the divider
+			for(int y = 35; y < 36;y++) {// thickness of the wall divider
+				map[y][x][0] = 2; // =0 background texture  & = 1 means block texture  & = 2 lava texture
+				map[y][x][1] = 2; // = 0 transparent block & =1 solid block & = 2 death block & = 3 winning block
+			}
+		}
+		for(int x = 29; x < 35;x++) {// height of the divider
+			for(int y = 35; y < 36;y++) {// thickness of the wall divider
+				map[y][x][0] = 2; // =0 background texture  & = 1 means block texture  & = 2 lava texture
+				map[y][x][1] = 2; // = 0 transparent block & =1 solid block & = 2 death block & = 3 winning block
+			}
+		}
+		for(int x = 20; x < 60;x++) {// death platform
+			map[x][36][0] = 2;  // =0 background texture  & = 1 means block texture  & = 2 lava texture
+			map[x][36][1] = 2; // = 0 transparent block & =1 solid block & = 2 death block & = 3 winning block
+		}
+		for(int x = 70; x < 80;x++) {// death platform
+			map[x][36][0] = 2;  // =0 background texture  & = 1 means block texture  & = 2 lava texture
+			map[x][36][1] = 2; // = 0 transparent block & =1 solid block & = 2 death block & = 3 winning block
+		}
+		
+		for(int x = 20; x < 80;x++) {// death platform
+			map[x][85][0] = 2;  // =0 background texture  & = 1 means block texture  & = 2 lava texture
+			map[x][85][1] = 2; // = 0 transparent block & =1 solid block & = 2 death block & = 3 winning block
+		}
+
+		for(int i=20; i <= 21;i++ ) {// platform
+			//  x	y  type     position of block
+			map[i][24][0]=1; // = 0 background texture  & = 1 means block texture  & = 2 lava texture
+			map[i][24][1]=1; // = 0 transparent block & = 1 solid block & = 2 death block & = 3 winning block
+		}
+		for(int i=28; i <= 29;i++ ) {// platform
+			//  x	y  type     position of block
+			map[i][30][0]=1; // = 0 background texture  & = 1 means block texture  & = 2 lava texture
+			map[i][30][1]=1; // = 0 transparent block & = 1 solid block & = 2 death block & = 3 winning block
+		}
+		for(int i=41; i <= 42;i++ ) {// platform
+			//  x	y  type     position of block
+			map[i][27][0]=1; // = 0 background texture  & = 1 means block texture  & = 2 lava texture
+			map[i][27][1]=1; // = 0 transparent block & = 1 solid block & = 2 death block & = 3 winning block
+		}
+		for(int i=52; i <= 53;i++ ) {// platform
+			//  x	y  type     position of block
+			map[i][26][0]=1; // = 0 background texture  & = 1 means block texture  & = 2 lava texture
+			map[i][26][1]=1; // = 0 transparent block & = 1 solid block & = 2 death block & = 3 winning block
+		}
+		for(int i=63; i <= 64;i++ ) {// platform
+			//  x	y  type     position of block
+			map[i][70][0]=1; // = 0 background texture  & = 1 means block texture  & = 2 lava texture
+			map[i][70][1]=1; // = 0 transparent block & = 1 solid block & = 2 death block & = 3 winning block
+		}
+		for(int i=47; i <= 48;i++ ) {// platform
+			//  x	y  type     position of block
+			map[i][67][0]=1; // = 0 background texture  & = 1 means block texture  & = 2 lava texture
+			map[i][67][1]=1; // = 0 transparent block & = 1 solid block & = 2 death block & = 3 winning block
+		}
+		for(int i=38; i <= 39;i++ ) {// platform
+			//  x	y  type     position of block
+			map[i][73][0]=1; // = 0 background texture  & = 1 means block texture  & = 2 lava texture
+			map[i][73][1]=1; // = 0 transparent block & = 1 solid block & = 2 death block & = 3 winning block
+		}
+		
+		
+		
+		for(int i = 38;i< 39;i++) {// winning platform
+			map[i][82][0]=1; // = 0 background texture  & = 1 means block texture  & = 2 lava texture
+			map[i][82][1]=3; // = 0 transparent block & = 1 solid block & = 2 death block & = 3 winning block
 		} 
 		return map;
 	}
