@@ -1,4 +1,3 @@
-package platformer;
 import java.awt.Color;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -23,7 +22,7 @@ public class Main_Menu implements ActionListener, ItemListener {
 	boolean checked = false;
 	JFrame frame = new JFrame("Main_Menu");
 	JComboBox dropdown;
-	String[] levellist = {"Level 1","Level 2","Level 3","Level 4","Level 5"};
+	String[] levellist = {"Level 1","Level 2","Level 3","Level 4","Level 5","Level 6"};
 	public Main_Menu() {
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setSize(460, 500);
@@ -78,7 +77,12 @@ public class Main_Menu implements ActionListener, ItemListener {
 			case 5:	
 				new Main(new Levels().fifthLevel(),20,20,width,height);
 				break;
-			}
+			
+			case 6:	
+				new Main(new Levels().fifthLevel(),20,20,width,height);
+				break;
+		}
+
 
 			frame.setVisible(false);
 			frame.dispose();
@@ -99,6 +103,10 @@ public class Main_Menu implements ActionListener, ItemListener {
 				new Main(new Levels().fourthLevel(),20,20);
 				break;
 			case 5:
+				new Main(new Levels().fifthLevel(),20,20);
+				break;
+			case 6:
+				new Main(new Levels().sixthLevel(),20,20);
 				break;
 			}
 		frame.setVisible(false);
